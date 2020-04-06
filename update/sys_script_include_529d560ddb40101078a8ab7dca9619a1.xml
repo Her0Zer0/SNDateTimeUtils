@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_411141_sndatetim.dateTimeUtil</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>dateTimeUtil</name>
+        <script><![CDATA[var dateTimeUtil = Class.create();
+dateTimeUtil.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    /**
+     * 
+     * @param { GlideDateTime Object } glide_date_time_obj 
+     * @param { Number (Optional) } number_from_current_date 
+     * 
+     *  Returns a string value of the abbreviated day of the week. 
+     *  If there isn't a number provided as a parameter then it is assumed that it should return the 
+     *  current day.
+     *  Days are numbered as follows 1 - 7 = Mon - Sun, 1 being Monday and 7 being the end of the week Sunday.  
+     * 
+     *  Example 1: If the day is Monday ( The first day of the week ) and the below is used. 
+     *  getSpokenDay(gdt_obj); //return value is Mon
+     * 
+     *  Example 2: If the day is Monday ( The first day of the week ) and the below is used. 
+     *  getSpokenDay(gdt_obj, 2); //return value is Wed
+     *  getSpokenDay(gdt_obj, -2); //return value is Sat 
+     */
+    getSpokenDay: function(glide_date_time_obj, number_from_current_date /* Optional */ ) {
+        number_from_current_date = number_from_current_date || 0;
+        glide_date_time_obj.addDays(number_from_current_date);
+        return this._getDayOfWeekTerm(glide_date_time_obj.getDayOfWeek(), "");
+    },
+
+    /**
+     * 
+     * @param { GlideDateTime Object } glide_date_time_obj 
+     * @param { Number (Optional) } number_from_current_date 
+     * 
+     *  Acts the same as getSpokenDay but returns the full spoken name of the week. 
+     * 
+     *  Example 1: If the day is Monday ( The first day of the week ) and the below is used. 
+     *  getSpokenDay(gdt_obj); //return value is Monday
+     * 
+     *  Example 2: If the day is Monday ( The first day of the week ) and the below is used. 
+     *  getSpokenDay(gdt_obj, 2); //return value is Wednesday
+     *  getSpokenDay(gdt_obj, -2); //return value is Saturday 
+     */
+
+    getFullSpokenDay: function(glide_date_time_obj, number_from_current_date /* Optional */ ) {
+        number_from_current_date = number_from_current_date || 0;
+        glide_date_time_obj.addDays(number_from_current_date);
+        return this._getDayOfWeekTerm(glide_date_time_obj.getDayOfWeek(), "DD");
+    },
+
+    /**
+     * 
+     * @param { Number } num 
+     * @param { String } format
+     * 
+     *  Used as a formater for getSpokenDay and getFullSpokenDay
+     *  For private use only 
+     */
+
+    _getDayOfWeekTerm: function(num, format) {
+        var dayOfWeek = "";
+        switch (num) {
+            case 1:
+                dayOfWeek = (format == "DD" ? "Monday" : "Mon");
+                break;
+            case 2:
+                dayOfWeek = (format == "DD" ? "Tuesday" : "Tues");
+                break;
+            case 3:
+                dayOfWeek = (format == "DD" ? "Wednesday" : "Wed");
+                break;
+            case 4:
+                dayOfWeek = (format == "DD" ? "Thursday" : "Thurs");
+                break;
+            case 5:
+                dayOfWeek = (format == "DD" ? "Friday" : "Fri");
+                break;
+            case 6:
+                dayOfWeek = (format == "DD" ? "Saturday" : "Sat");
+                break;
+            case 7:
+                dayOfWeek = (format == "DD" ? "Sunday" : "Sun");
+                break;
+        }
+        return dayOfWeek;
+    },
+
+    /**
+     * 
+     * @param { GlideDateTime Object } date_instance 
+     * @param { GlideDateTime Object } glide_date_time_obj_1 
+     * @param { GlideDateTime Object } glide_date_time_obj_2 
+     * 
+     *  Takes 3 glidedatetime objects and determines if the date instance is after than the first glidedatetime object and 
+     *  before the second glidedatetime object. 
+     *  Returns a boolean
+     */
+    isDateTimeBetween: function( date_instance, glide_date_time_obj_1, glide_date_time_obj_2){
+		return (glide_date_time_obj_1.getValue() > date_instance.getValue() && date_instance.getValue() <  glide_date_time_obj_2.getValue()? true : false );
+	},
+
+    /**
+     * 
+     * @param { GlideDateTime Object } date_instance 
+     * @param { GlideDateTime Object } glide_date_time_obj 
+     * 
+     *  Takes 2 glidedatetime objects and returns a boolean true if the date_instance is after the specified time of the second parameter
+     */
+
+    isDateTimeAfter: function(date_instance, glide_date_time_obj){
+		return (glide_date_time_obj.getValue() < date_instance.getValue()? true : false);
+    },
+    
+    /**
+     * 
+     * @param { GlideDateTime Object } date_instance 
+     * @param { GlideDateTime Object } glide_date_time_obj 
+     * 
+     *  Takes 2 glidedatetime objects and returns a boolean true if the date_instance is before the specified time of the second parameter
+     */
+	
+	isDateTimeBefore: function(date_instance, glide_date_time_obj){
+		return (date_instance.getValue() <  glide_date_time_obj.getValue()? true : false );
+	},
+	
+	
+    type: 'dateTimeUtil'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-04-06 21:13:17</sys_created_on>
+        <sys_id>529d560ddb40101078a8ab7dca9619a1</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>dateTimeUtil</sys_name>
+        <sys_package display_value="SNDateTimeUtils" source="x_411141_sndatetim">57cc1e09db40101078a8ab7dca9619dd</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="SNDateTimeUtils">57cc1e09db40101078a8ab7dca9619dd</sys_scope>
+        <sys_update_name>sys_script_include_529d560ddb40101078a8ab7dca9619a1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-04-06 21:13:32</sys_updated_on>
+    </sys_script_include>
+</record_update>
